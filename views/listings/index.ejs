@@ -1,0 +1,179 @@
+<% layout("/layouts/boilerplate") %> 
+
+<style>
+
+#filters{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.filter{
+    text-align: center;
+    margin-left: 4rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+}
+
+/* @media (max-width: 600px) {
+    .filter {
+        display: none; //
+    }
+    .filter:first-child {
+        display: block;
+    }
+}  */
+.filter:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+.filter p{
+    font-size: 0.8rem;
+}
+.tax-info{
+    display: none;
+}
+.tax-toggle{
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+</style>
+    
+    <!-- <h3>All Listings</h3> -->
+    <!-- <form action="/listings/new" method="GET">
+        <button>Add New Listing</button>
+    </form> -->
+    
+    <div id="filters">
+        <div class="filter"  >
+            <div><i class="fa-solid fa-fire customFilter" category="Trending"></i></div>
+            <p>Trending</p>
+        </div>
+        <div class="filter" >
+            <div><i class="fa-solid fa-bed customFilter" category="Rooms"></i></div>
+            <p>Rooms</p>
+        </div>
+        <div class="filter" >
+            <div><i class="fa-solid fa-mountain-city customFilter" category="Iconic cities"></i></div>
+            <p>Iconic cities</p>
+        </div>
+        <div class="filter" >
+            <div><i class="fa-solid fa-mountain-sun customFilter" category="Mountain"></i></div>
+            <p>Mountain</p>
+        </div>
+        <div class="filter" >
+            <div><i class="fa-brands fa-fort-awesome customFilter" category="Castle"></i></div>
+            <p>Castle</p>
+        </div>
+        <div class="filter" >
+            <div><i class="fa-solid fa-person-swimming customFilter" category="Amazing pools"></i></div>
+            <p>Amazing pools</p>
+        </div>
+        <div class="filter" >
+            <div><i class="fa-solid fa-campground customFilter" category="Camping"></i></div>
+            <p>Camping</p>
+        </div>
+        <div class="filter" >
+            <div><i class="fa-solid fa-cow customFilter" category="Farms"></i></div>
+            <p>Farms</p>
+        </div>
+        <div class="filter" >
+            <div><i class="fa-regular fa-snowflake customFilter" category="Arctic"></i></div>
+            <p>Arctic</p>
+        </div>
+        <div class="filter" >
+            <div><i class="fa-solid fa-ship customFilter" category="Boat"></i></div>
+            <p>Boat</p>
+        </div>
+        <div class="tax-toggle">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                <label class="custom-control-label" for="customSwitch1">Display total after taxes</label>
+              </div>
+        </div>
+    </div>
+    
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+        <%for(let list of allListings){%>
+        <a href="/listings/<%= list._id %>" class="listing-link">
+            <div class="card col listing-card" id="card-details">
+                <img class="card-img-top" src="<%= list.image.url %>" alt="listing_image" style="height: 20rem;">
+                <div class="card-img-overlay"></div>
+                <div class="card-body">
+                    <p class="card-text">
+                       <b> <%= list.title %> <br></b>
+                    &#8377; <%= list.price.toLocaleString("en-IN") %> /night</p>
+                    <div class="card-category"  data="<%= list.category %>"></div>
+                    <i class="tax-info">&nbsp;  +18%GST</i>
+                </div>
+            </div>
+        </a>
+        <%}%>
+    </div>
+
+<script>
+    let taxSwitch = document.getElementById("customSwitch1");
+    taxSwitch.addEventListener("click",()=>{
+        let taxInfo = document.getElementsByClassName("tax-info");
+        for(info of taxInfo){
+            if(info.style.display!="inline"){
+                info.style.display="inline";
+            }else{
+                info.style.display= "none"
+            }
+        }
+    });
+
+    let filter = document.querySelectorAll(".customFilter");
+        filter.forEach(icon=>{
+            icon.addEventListener("click",()=>{
+                console.log("clicked");
+                const title = icon.getAttribute("category");
+                console.log(title);
+                filterItem(title);
+            })
+        });
+
+        function filterItem(title){
+            const items = document.querySelectorAll("#card-details .card-category ");
+            //const cards = document.getElementsByClassName("listing-card");
+            console.log(items);
+            //console.log(cards);
+               
+                
+                for(item of items){
+                    if(item.getAttribute("data") === title){
+                            const card=document.getElementById("card-details")
+                             console.log(card);
+                            card.style.display = "block";
+                            
+                            
+                        }
+                }
+            
+                     //const cards= document.getElementsByClassName("listing-card");
+                    //console.log(cards);
+                    // for(card of cards){
+                    //     if(category=== title){
+                    //     card.style.display= "block";
+                    //     }else{
+                    //         card.style.display= "block";
+                    //     }
+                    // }
+               
+              
+        }
+</script>
+    
+    <!-- <ul>
+        <%for(let list of allListings){%>
+            <li><a href="/listings/<%= list._id %>"> <%= list.title %> </a></li>
+            
+        <%}%>
+    </ul> -->
+    
+
