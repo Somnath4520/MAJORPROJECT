@@ -23,7 +23,26 @@ module.exports.search = async(req,res)=>{
         }
     }
     
-}
+};
+
+//filter route
+module.exports.filter = async(req,res)=>{
+        const { category } = req.params;
+        try {
+          const listing = await Listing.find({ category: category });
+          console.log(listing);
+          if (listing.length === 0 || !listing) {
+            req.flash("error", "No listing found for that category");
+            return res.redirect("/listings");
+          }
+          res.render("listings/index.ejs", { allListings: listing });
+        } catch (error) {
+          console.log(error);
+          req.flash("error", "Something went wrong");
+          res.redirect("/listings");
+        }
+};
+
 
 //index route 
 module.exports.index = async(req, res)=>{

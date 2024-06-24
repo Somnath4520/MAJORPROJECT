@@ -35,6 +35,7 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 
+
 const dbUrl = process.env.ATLASDB_URL;
 
 main().then(()=>{
@@ -103,19 +104,6 @@ app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
 
-// app.get("/testlisting",async (req, res)=>{
-//     let sampleList = new Listing({
-//         title:"My new Villa",
-//         description:"By the beach",
-//         price:1200,
-//         location:"Pondulem, Goa",
-//         country:"India"
-//     });
-
-//     await sampleList.save();
-//     console.log("sample was saved");
-//     res.send("successful testing");
-// });
 
 
 
