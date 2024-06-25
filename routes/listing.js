@@ -37,13 +37,5 @@ router.route("/:id")
 //edit route
 router.get("/:id/edit",isLoggedIn,isOwner, wrapAsync(listingController.renderEditForm));
 
-// //update route
-// router.put("/:id", isLoggedIn,isOwner, validateListing ,wrapAsync(listingController.updateListing));
-
-// //show route
-// router.get("/:id",wrapAsync(listingController.showListing));
-
-// //delete route
-// router.delete("/:id",isLoggedIn,isOwner, wrapAsync(listingController.destroyListing));
 
 module.exports = router;
